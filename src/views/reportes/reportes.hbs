@@ -1,0 +1,236 @@
+
+<div id="main-content">
+    <div class="container-fluid">
+         {{>message}} 
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Reportes</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Reportes</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix d-flex justify-content-center">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Reportes</h2>
+                        <div class="text-right">
+                            <h6>Ganancias: <span class="font-weight-bold" id="totalGanancia"></span></h6>
+                            <h6>Ingreso: <span class="font-weight-bold" id="dineroVentas"></span> </h6>
+                            <h6>Total de Ventas: <span class="font-weight-bold" id="totalVentas"></span></h6>
+                            <h6>Productos Vendidos: <span class="font-weight-bold" id="totalProductos"></span></h6>
+                            <h6>Ventas Canceladas: <span class="font-weight-bold" id="totalCancelados"></span></h6>
+                        </div>
+                    </div>
+
+                    <div class="mx-3">
+                        <button id="btnTabVentas" class="btn btn-info active">Ventas</button>
+                        <button id="btnTabMasVendidos" class="btn btn-info">Top Ventas</button>
+                        <button id="btnTabAgotados" class="btn btn-info">Agotados</button>
+                    </div>
+                    <div class="body">
+                        <section class="ventas">
+                            <form id="formFiltroReporteVentas">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Vendedor</label>
+                                            <select name="idUser" id="idUser" class="form-control">
+                                                <option value="">Seleccionar Vendedor</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Fecha Inicio</label>
+                                             <input type="date" name="fechaInicio"
+                                        class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Fecha Fin</label>
+                                            <input type="date" name="fechaFin" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 d-flex align-items-end ">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <input type="submit" class="btn btn-info" value="Filtrar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <table class="table table-hover" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Total de la Transacción</th>
+                                        <th class="text-center">Fecha </th>
+                                        <th class="text-center">Ver Detalles</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seccionTransaccion">
+                                    <tr>
+                                        <td colspan="4"><h4 class="text-center">No hay datos</h4></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+
+                        <div class="row masVendidos" style="display: none">
+
+                            <div class="col-md-12">
+                                <form id="formFiltroReporteMasVendidos">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Fecha Inicio</label>
+                                                <input type="date" name="fechaInicio" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label>Fecha Fin</label>
+                                                <input type="date" name="fechaFin" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 d-flex align-items-end ">
+                                            <div class="form-group">
+                                                <label></label>
+                                                <input type="submit" class="btn btn-info" value="Filtrar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6 border">
+                                <label>Top 10 Productos mas Vendidos</label>
+                                <table class="table table-hover" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Código</th>
+                                            <th class="text-center">Producto </th>
+                                            <th class="text-center">Total Ventas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="seccionMasVendidos">
+                                        <tr>
+                                            <td colspan="4"><h4 class="text-center">No hay datos</h4></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6 border">
+                                <label>Top 10 Productos menos Vendidos</label>
+                                <table class="table table-hover" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Código</th>
+                                            <th class="text-center">Producto </th>
+                                            <th class="text-center">Total Ventas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="seccionMenosVendidos">
+                                        <tr>
+                                            <td colspan="4"><h4 class="text-center">No hay datos</h4></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row agotados" style="display: none">
+                            <div class="col-md-6 border">
+                                <label>Productos Agotados</label>
+                                <div style="max-height:65vh; overflow: scroll;">
+                                    <table class="table table-hover" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Producto </th>
+                                                <th class="text-center">Cantidad Minima</th>
+                                                <th class="text-center">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="seccionAgotados">
+                                            <tr>
+                                                <td colspan="4"><h4 class="text-center">No hay datos</h4></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 border">
+                                <label>Productos por Agotarse</label>
+                                <div style="max-height:65vh; overflow: scroll;">
+                                    <table class="table table-hover" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Código</th>
+                                                <th class="text-center">Producto </th>
+                                                <th class="text-center">Cantidad Minima</th>
+                                                <th class="text-center">Cantidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="seccionPorAgotarse">
+                                            <tr>
+                                                <td colspan="4"><h4 class="text-center">No hay datos</h4></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL VER DETALLE TRANSACCION -->
+<div class="modal fade " id="modalDetalleTransaccionesCorte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalles de la Transacción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+            <div style="max-height:65vh; overflow: scroll;">
+                <table class="table table-hover" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th style="width: 40px">Cantidad</th>
+                            <th>Total</th>
+                            <th>Fecha </th>
+                        </tr>
+                    </thead>
+                    <tbody id="seccionDetalleTransaccion">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+     $(document).ready(function(){
+        $("#menu7").addClass("active");
+    });
+</script>
+<script src="/ajax/reportes.js"></script>

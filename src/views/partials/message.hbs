@@ -1,0 +1,118 @@
+<script src="/assets/vendor/toastr/toastr.js"></script>
+{{#if message}}
+<script>
+    toastr.options.timeOut = "1500";
+    toastr.options.closeButton = true;
+    toastr.options.positionClass = 'toast-bottom-right';
+     
+    $context = "error";
+    $message = "No se ha podido Guardar";
+    $position = "top-right";
+
+    if ($context === '') {
+        $context = 'info';
+    }
+
+    if ($position === '') {
+        $positionClass = 'toast-bottom-right';
+    } else {
+        $positionClass = 'toast-' + $position;
+    }
+
+    toastr.remove();
+    toastr[$context]($message, '', {
+        positionClass: $positionClass
+    });
+
+</script>
+{{/if}}
+
+{{#if success}}
+
+<script>
+    toastr.options.timeOut = "1500";
+    toastr.options.closeButton = true;
+    toastr.options.positionClass = 'toast-bottom-right';
+     
+    $context = "success";
+    $message = "Guardado";
+    $position = "top-right";
+
+    if ($context === '') {
+        $context = 'info';
+    }
+
+    if ($position === '') {
+        $positionClass = 'toast-bottom-right';
+    } else {
+        $positionClass = 'toast-' + $position;
+    }
+
+    toastr.remove();
+    toastr[$context]($message, '', {
+        positionClass: $positionClass
+    });
+
+</script>
+
+{{/if}}
+
+{{#if acceso}}
+
+<script>
+    toastr.options.timeOut = "3000";
+    toastr.options.closeButton = true;
+    toastr.options.positionClass = 'toast-bottom-right';
+     
+    $context = "success";
+    $message = "Bienvenido";
+    $position = "top-right";
+
+    if ($context === '') {
+        $context = 'info';
+    }
+
+    if ($position === '') {
+        $positionClass = 'toast-bottom-right';
+    } else {
+        $positionClass = 'toast-' + $position;
+    }
+
+    toastr.remove();
+    toastr[$context]($message, '', {
+        positionClass: $positionClass
+    });
+
+</script>
+
+{{/if}}
+
+{{#if noacceso}}
+
+<script>
+    toastr.options.timeOut = "1500";
+    toastr.options.closeButton = true;
+    toastr.options.positionClass = 'toast-bottom-right';
+     
+    $context = "error";
+    $message = "Usuario y/o Contraseña incorrectos";
+    $position = "top-right";
+
+    if ($context === '') {
+        $context = 'info';
+    }
+
+    if ($position === '') {
+        $positionClass = 'toast-bottom-right';
+    } else {
+        $positionClass = 'toast-' + $position;
+    }
+
+    toastr.remove();
+    toastr[$context]($message, '', {
+        positionClass: $positionClass
+    });
+
+</script>
+
+{{/if}}

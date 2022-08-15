@@ -1,0 +1,225 @@
+<script>
+	var bPreguntar = false;
+ 
+	window.onbeforeunload = preguntarAntesDeSalir;
+ 
+	function preguntarAntesDeSalir() {
+        
+        
+        var respuesta;
+
+        if ( bPreguntar ) {
+            respuesta = confirm ( '¿Seguro que quieres salir?' );
+    
+            if ( respuesta ) {
+                window.onunload = function () {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+        
+	}
+</script>
+<div id="main-content">
+    <div class="container-fluid">
+         
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Punto de Venta</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Punto de Venta</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+           {{>message}} 
+        <!-- CONTENIDO -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row clearfix">
+                    <div class="col-sm-12 ">
+                        <div class="card">
+                            <div class="header">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <button class="btn btn-light" data-toggle="modal" data-target="#modalBuscarProducto" onclick="clearModal()"><i class="fas fa-search"></i></button>
+                                        </div>
+                                        <input type="hidden" id="idUser" value="{{user.idUser}}">
+                                        <form id="formPV" class="col-md-11">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label class="text-center">Cantidad</label>
+                                                    <input type="number" class="form-control text-center" id="cantidadProducto" name="cantidadProducto" value="1" autocomplete="off" required>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h6 class="text-center">Buscar Producto</h6>
+                                                    <input type="text" class="form-control" id="buscaProducto" name="buscaProducto" autofocus autocomplete="off" required>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- empieza form --}}
+                <form action="/pv/transaccion" method="POST">                        
+                    <div class="row clearfix">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Venta</h2>
+                                </div>
+                                <div class="body">
+                                        <div class="table-responsive">
+                                            <div style="max-height:45vh; overflow: scroll;">
+                                                <table class="table table-hover scroll" cellspacing="0" id="tablaVenta">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Código</th>
+                                                            <th>Producto</th>
+                                                            <th class="text-center">Precio Venta</th>
+                                                            <th class="text-center">Cantidad</th>
+                                                            <th class="text-center">Eliminar</th>
+                                                        </tr>
+                                                    </thead>
+                                                        <tbody id="seccionVenta">
+                                                        </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                <div class="col-md-4">
+                    <div class="row clearfix">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="body">
+                                    <legend>Total a pagar: $ <span id="APagar"></span> </legend>
+                                    <input type="hidden" id="totalTransaccion" name="totalTransaccion">
+                                    <label class="fancy-checkbox mb-0">
+                                        <input type="checkbox" name="checkbox" id="checkCliente">
+                                        <span>Cliente</span>
+                                    </label>
+                                    <div class="m-l-35 my-3">
+                                        <select name="idCliente" id="idCliente" class="form-control" style="display: none;">
+                                            <option value="">Seleccionar Cliente</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-right my-3" id="btnPagar" style="display: none">
+                                        <input type="submit" class="btn btn-info" value="Pagar" id="btnPagarClick" onclick="imprimir()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {{!-- termina form --}}
+                </div>
+        </div>
+    </div>
+</div>
+
+<div id="yourdiv" style="display: none">
+    <div style="font-size: 11px;font-family: 'Times New Roman'; width: 170px; max-width: 170px;">
+        {{!-- <img src="http://eloisapv.com/assets/img/logo.jpg" alt="Eloisa logo" class="max-width: inherit;width: inherit;"> --}}
+        <p style="text-align: center;align-content: center;">ELOISA
+            <br><span id="fechaTicket"></span></p>
+        <table style="border-top: 1px dashed black;border-collapse: collapse;">
+            <thead>
+                <tr style="border-top: 1px dashed black;border-collapse: collapse;">
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 30px;max-width: 30px;word-break: break-all;">CAN</th>
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 75px;max-width: 75px;">PRODUCTO</th>
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 50px;max-width: 50px;word-break: break-all;">IMPORT</th>
+                </tr>
+            </thead>
+            <tbody  id="seccionTicket">
+            </tbody>
+        </table>
+        <table style="border-top: 1px dashed black;border-collapse: collapse;text-align: right;align-content: right;font-size: 11px;font-family: 'Times New Roman'; width:100%;">
+            <tr>
+                <th><p id="subtotalTicket"></p></th>
+            </tr>
+        </table>
+        <p style="text-align: center;align-content: center;">¡GRACIAS POR SU COMPRA!
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade " id="modalBuscarProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Buscar Producto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="formBuscarProducto">
+            <div class="row">
+                <div class="col-md-12">
+                    <legend class="text-center">Producto</legend>
+                    <input type="text" class="form-control" id="buscaProductoModal" name="buscaProductoModal" autofocus autocomplete="off" required>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div style="max-height:400px; overflow: scroll;">
+
+            <table class="table table-hover" cellspacing="0" id="tablaBuscarModal">
+                <thead>
+                    <tr>
+                        <th style="width: 40px">Cantidad</th>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th class="text-center">Precio Venta</th>
+                        <th class="text-center">Almacen</th>
+                    </tr>
+                </thead>
+                <tbody id="seccionProductosModal" >
+                    
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu1").addClass("active");
+    });
+</script>
+<script type="text/javascript">
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data)
+    {
+        var mywindow = window.open('', 'new div', 'height=500,width=800');
+        mywindow.document.write('<html><head><title>Ticket de compra</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+</script>
+<script src="/ajax/pv.js"></script>

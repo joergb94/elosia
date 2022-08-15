@@ -1,0 +1,98 @@
+    {{!-- {{>navigation}} --}}
+<div id="main-content">
+    <div class="container-fluid">
+         {{>message}} 
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Perfiles</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Perfiles</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix formAdd">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Registrar Perfil</h2>
+                        <button type="button" class="btn btn-success btnLista"><i class="fa fa-clipboard-list"></i> Lista</button>
+                    </div>
+                    <div class="body">
+                        <form id="formAddPerfiles" autocomplete="off" data-action="addPerfil">
+                            <input type="hidden" id="idTipoUserE" name="idTipoUser">
+                            <div class="row">
+                                <div class="form-group  col-md-5">
+                                    <label>Nombre del Perfil</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="descripcionTipo" id="descripcionTipo" title="Este campo solo admite letras" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 text-center seccionBtnPerfil">
+                                    <input type="submit" class="btn btn-info" value="Registrar" id="btnRegistro">
+                                </div>
+                            </div>
+                        </form>
+                        <div id="formAddMenu" style="display:none">
+                            <input type="hidden" id="idTipoUser" name="idTipoUser">
+                            <div class="row" id="seccionMenu">
+                                {{#each menu}}
+                                    <div class="col-md-2">
+                                        <h5>
+                                            <i class="{{icono}}"></i>
+                                            <button class="btn btn-danger addMenu" value="{{id_menu}}" id="menuActive{{id_menu}}"><i class="fas fa-lock"></i></button>
+                                            <button class="btn btn-success removeMenu" value="{{id_menu}}" id="menuDisabled{{id_menu}}" style="display: none"><i class="fas fa-lock-open"></i></button>
+                                        </h5>
+                                        <h5>
+                                            {{descripcionMenu}}
+                                        </h5>
+                                    </div>
+                                {{/each}}
+                            </div>
+                            <div class="form-group col-md-12 text-center">
+                                <button class="btn btn-info" id="btnGuardarMenu">Registrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix lista" style="display: none">
+            <div class="col-lg-12"> 
+                <div class="card">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Lista de Perfiles</h2>
+                        <button type="button" class="btn btn-success btnNuevo"><i class="fa fa-user-plus"></i> Añadir</button>
+                    </div>
+                    <div class="body">                    
+                        <div class="table-responsive">
+                            <table class="table table-hover" cellspacing="0" id="tablaInventario">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Perfil</th>
+                                        <th class="text-left">Estatus</th>
+                                    </tr>
+                                </thead>
+                                    <tbody id="seccionPerfiles">
+                                     
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu11").addClass("active");
+    });
+</script>
+<script src="/ajax/perfiles.js"></script>

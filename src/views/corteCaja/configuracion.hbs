@@ -1,0 +1,59 @@
+<div id="main-content">
+    <div class="container-fluid">
+        {{>message}}
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Configuración</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Configuración</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix d-flex justify-content-center">
+            <div class="col-sm-10">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <legend>Configurar Impresión de Tickets</legend>
+                        <div class="row">
+                            <input type="checkbox" id="flagTicket" name="flagTicket" class="js-switch"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header d-flex justify-content-between">
+                        <legend>Configurar Tipo de Punto de Venta</legend>
+                        <div class="row">
+                            <select name="id_configuracion_pv" id="id_configuracion_pv" class="form-control">
+                                <option value="1">Tienda</option>
+                                <option value="2">Uniformes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header d-flex justify-content-between">
+                        <legend>Códigos de Barra</legend>
+                        <div class="row">
+                            <a href="/productos/barcode" class="btn btn-light"><span><i class="fas fa-barcode"></i> Códigos de Barra</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu9").addClass("active");
+    });
+</script>
+<script>
+    var elem = document.querySelector('.js-switch');
+    var init = new Switchery(elem,  {secondaryColor: 'red', jackColor: '#fff', jackSecondaryColor: '#fff' });
+
+</script>
+<script src="/ajax/configuracion.js"></script>

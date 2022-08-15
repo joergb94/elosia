@@ -1,0 +1,73 @@
+    {{!-- {{>navigation}} --}}
+<div id="main-content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Productos</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Modificar Producto</h2>
+                        <a href="/productos/list" class="btn btn-success"><i class="fa fa-clipboard-list"></i> Lista</a>
+                    </div>
+                    <div class="body">
+                        <form action="/productos/update/{{producto.idProd}}" method="POST">
+                            <div class="row">
+                                <div class="form-group  col-md-6">
+                                    <label>Nombre del Producto</label>
+                                    <input type="text" class="form-control" name="nombreProd" id="nombreProd" title="Este campo solo admite letras" required value="{{producto.nombreProd}}">
+                                </div>
+                                <div class="form-group  col-md-6">
+                                    <label>Código</label>
+                                    <input type="text" class="form-control" name="codigoProd" id="codigoProd" required value="{{producto.codigoProd}}"> 
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Precio Compra</label>
+                                    <input type="text" class="form-control" name="precioProd" id="precioProd" required value="{{producto.precioProd}}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Precio Público</label>
+                                    <input type="text" class="form-control" name="precioVentaProd" id="precioVentaProd" required value="{{producto.precioVentaProd}}">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Mínimo en Almacen</label>
+                                    <input type="number" class="form-control" name="minimoStock" id="minimoStock" required value="{{producto.minimoStock}}">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Categoría</label>
+                                    <select name="idCategoria" id="idCategoria"  class="form-control" required>
+                                        <option value="">Seleccionar</option>
+                                        {{#each categorias}}
+                                            <option value="{{idCategoria}}" {{selected idCategoria ../selectState}}>{{nombreCategoria}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <input type="hidden" name="idCategoriaHidden" id="idCategoriaHidden" value="{{producto.idCategoria}}">
+                                </div>
+                                <div class="form-group col-md-12 text-center">
+                                    <input type="submit" class="btn btn-info" value="Actualizar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     $(document).ready(function(){
+        $("#menu5").addClass("active");
+    });
+</script>
+<script src="/ajax/producto.js"></script>

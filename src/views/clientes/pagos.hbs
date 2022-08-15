@@ -1,0 +1,194 @@
+<div id="main-content">
+    <div class="container-fluid">
+         
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Clientes</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Clientes</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+           {{>message}} 
+        <!-- CONTENIDO -->
+        <div class="row clearfix">
+             <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header d-flex justify-content-between">
+                            <h2>Pagos Pendientes</h2>
+                        </div>
+                        <div class="body">                    
+                            <div class="table-responsive">
+                                <table class="table table-hover" cellspacing="0" id="tablaPagosPendientes">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Nombre Cliente</th>
+                                            <th class="text-center">Compra Total</th>
+                                            <th class="text-center">Saldo a pagar</th>
+                                            <th class="text-center">Ver Compras</th>
+                                            <th class="text-center">Ver Abonos</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody id="seccionInventario">
+                                            {{#each clientes}}
+                                            <tr id="tr{{idCliente}}">
+                                                <td>{{nombreCliente}}</td>
+                                                <td class="text-center">$ {{#formatoPrecio saldoTotal}} {{/formatoPrecio}}</td>
+                                                <td class="text-center">$ {{#formatoPrecio saldoRestante}} {{/formatoPrecio}}</td>
+                                                <td class="text-center"><button class="btn btn-info" data-toggle="modal" data-target="#modalTransaccionesCliente" onclick="transaccionesCliente({{idCliente}})"><i class="fas fa-eye"></i></button></td>
+                                                <td class="text-center"><button class="btn btn-success" data-toggle="modal" data-target="#modalAbonos" onclick="abonosCliente({{idCliente}})"><i class="fas fa-file-alt"></i></button></td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER ABONOS -->
+<div class="modal fade " id="modalAbonos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Abonos del Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                 <div style="max-height:60vh; overflow: scroll;">
+                    <table class="table table-hover" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Cantidad Abonada</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seccionAbonos">
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER TRANSACCIONES -->
+<div class="modal fade " id="modalTransaccionesCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Transacciones del cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height:60vh; overflow: scroll;">
+                    <table class="table table-hover" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Total de la Transacción</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Ver Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seccionTransaccion">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-right">Saldo Restante:</th>
+                                <th class="text-center"><span id="saldoRestanteModal"></span></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="" id="btnAbonar" data-toggle="modal" data-target="#modalAbonar">Abonar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL VER COMPRA -->
+<div class="modal fade " id="modalDetalleCompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"  role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalle de Compras</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="my-1">
+                <button class="btn btn-danger" id="btnBackDetalle"><i class="fas fa-reply"></i></button>
+            </div>
+            <div style="max-height:60vh; overflow: scroll;">
+                <table class="table table-hover" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th style="width: 40px">Cantidad</th>
+                            <th>Total</th>
+                            <th>Fecha </th>
+                        </tr>
+                    </thead>
+                    <tbody id="seccionProductosModal">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{!-- MODAL ABONAR --}}
+
+<div class="modal fade" id="modalAbonar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Abonar a Cuenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form encrypt="multipart/form-data" id="formAbono" method="POST" autocomplete="off">
+            <input type="hidden" id="idCliente" name="idCliente" >
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label">Cantidad:</label>
+                    <input type="text" class="form-control" id="cantidadAbono" name="cantidadAbono" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Abonar">
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+     $(document).ready(function(){
+        $("#menu3").addClass("active");
+    });
+</script>
+<script src="/ajax/pagos.js"></script>

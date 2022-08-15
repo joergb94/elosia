@@ -1,0 +1,58 @@
+    {{!-- {{>navigation}} --}}
+<div id="main-content">
+    <div class="container-fluid">
+         
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Productos</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+           {{>message}} 
+        <!-- CONTENIDO -->
+        <div class="row clearfix">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Lista de Categorias</h2>
+                        <div>
+                            <a href="/productos/list" class="btn btn-light"><i class="fa fa-clipboard-list"></i> Productos</a>
+                            <a href="/productos/categoria" class="btn btn-success"><i class="fas fa-plus"></i> Añadir</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover" id="tablaProductos">
+                            <thead>
+                                <tr>
+                                    <th>Categoría</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each categorias}}
+                                    <tr>
+                                        <td> {{nombreCategoria}} </td>
+                                        <td class="text-center"> <a href="updateCat/{{idCategoria}}" class="badge badge-warning"><i class="fas fa-edit"></i> </a> <a href="#" onclick="eliminarCat('{{idCategoria}}')" class="badge badge-danger">Eliminar</a> </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+     $(document).ready(function(){
+        $("#menu5").addClass("active");
+    });
+</script>
+<script src="/ajax/producto.js"></script>

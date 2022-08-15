@@ -1,0 +1,302 @@
+<div id="main-content">
+    <div class="container-fluid">
+        {{>message}}
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Corte de Caja</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Corte de Caja</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix d-flex justify-content-center">
+            <div class="col-sm-10 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Configurar Corte de Caja</h2>
+                        <div>
+                            <button class="btn btn-warning" id="btnNuevoCorte" style="display: none">Cerrar
+                                Corte</button>
+                            <button class="btn btn-info" id="btnVerCortes" data-target="#modalVerCortes"
+                                data-toggle="modal">Ver Cortes</button>
+                            {{#checkEditarCorte user}}{{/checkEditarCorte}}
+                            <button class="btn btn-light" data-target="#modalResumenCorte" data-toggle="modal" onclick="" id="btnResumenCorte" style="display: none">Resumen</button>
+
+                        </div>
+                    </div>
+                    <div class="body">
+                        <legend id="labelCorteIniciado"></legend>
+                        <form method="POST" id="formCantidadInicial" autocomplete="off" style="display: none">
+                            <input type="hidden" id="idUser" value="{{user.idUser}}">
+                            <input type="hidden" id="idCorte">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <label>Cantidad Inicial</label>
+                                    <input type="number" class="form-control" name="cantidadCorte" id="cantidadCorte"
+                                        required autofocus>
+                                </div>
+                                <div class="form-group col-md-12 text-center my-3">
+                                    <input type="submit" class="btn btn-info" value="Guardar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR TRANSACCIONES -->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar corte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="formEditarCorte" autocomplete="off">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <label>Cantidad Inicial</label>
+                            <input type="number" class="form-control" name="cantidadCorteEditar"
+                                id="cantidadCorteEditar" required>
+                        </div>
+                        <div class="form-group col-md-12 text-center my-3">
+                            <input type="submit" class="btn btn-info" value="Editar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER CORTES -->
+<div class="modal fade" id="modalVerCortes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cortes de caja del Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="max-height:400px; overflow: scroll; overflow-x: hidden;">
+                    <form id="formCortes">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Inicio</label>
+                                    <input type="date" id="fechaInicio" name="fechaInicio"
+                                        class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Fecha Fin</label>
+                                    <input type="date" id="fechaFin" name="fechaFin" class="form-control"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <div class="form-group">
+                                    <label></label>
+                                    <input type="submit" class="btn btn-info" value="Filtrar">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table table-hover" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Usuario</th>
+                                <th class="text-center">Cantidad Inicial</th>
+                                <th class="text-center">Fecha de Inicio</th>
+                                <th class="text-center">Fecha de Fin</th>
+                                <th class="text-center">Ver</th>
+                                <th class="text-center">Resumen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seccionCortesUser">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER TRANSACCIONES -->
+<div class="modal fade " id="modalTransaccionesCorte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Transacciones del corte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="my-1">
+                    <button class="btn btn-danger" id="btnBackTransacciones"><i class="fas fa-reply"></i></button>
+                </div>
+                <div style="max-height:400px; overflow: scroll; overflow-x: hidden;">
+                    <table class="table table-hover" cellspacing="0" id="tablaBuscarModal">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Total de la Transacción</th>
+                                <th class="text-center">Fecha </th>
+                                <th class="text-center">Ver Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seccionTransaccion">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER DETALLE TRANSACCION -->
+<div class="modal fade " id="modalDetalleTransaccionesCorte" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles de la Transacción</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="my-1">
+                    <button class="btn btn-danger" id="btnBackDetalle"><i class="fas fa-reply"></i></button>
+                </div>
+                <div style="max-height:400px; overflow: scroll; overflow-x: hidden;">
+                    <table class="table table-hover" cellspacing="0" id="tablaBuscarModal">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th style="width: 40px">Cantidad</th>
+                                <th>Total</th>
+                                <th>Fecha </th>
+                            </tr>
+                        </thead>
+                        <tbody id="seccionDetalleTransaccion">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- RESUMEN --}}
+<!-- MODAL VER CORTES -->
+<div class="modal fade" id="modalResumenCorte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Resumen del Corte</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="corteInicial">Corte Inicial</label>
+                        <input type="text" id="corteInicial" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="ganancias">Ganancias</label>
+                        <input type="text" id="ganancias" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="dineroVentas">Ingresos</label>
+                        <input type="text" id="dineroVentas" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="totalVentas">Ventas Realizadas</label>
+                        <input type="text" id="totalVentas" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="totalProductos">Productos Vendidos</label>
+                        <input type="text" id="totalProductos" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="totalCancelados">Ventas Canceladas</label>
+                        <input type="text" id="totalCancelados" class="form-control" disabled>
+                    </div>
+                    <div class="col-md-12 form-group text-center">
+                        <input type="button" class="btn btn-danger" value="Imprimir" onclick="PrintElem('#yourdiv')">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="yourdiv" style="display: none">
+    <div>
+        <p style="text-align: center;align-content: center;">Resumen de Corte <span id="fechaInicioCorte"></span> - <span id="fechaFinCorte"></span>
+            <br><span id="fechaTicket"></span></p>
+        <table style="border: 1px solid black;border-collapse: collapse;">
+            <thead>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Corte Inicial</th>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Ganancias</th>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Ingresos</th>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Ventas Realizadas</th>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Productos Vendidos</th>
+                <th style="padding:5px; border: 1px solid black;border-collapse: collapse; text-align:center;">Ventas Canceladas</th>
+            </thead>
+            <tbody  id="seccionResumen">
+            </tbody>
+        </table>        
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu10").addClass("active");
+    });
+</script>
+<script>
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data)
+    {
+        var mywindow = window.open('', 'new div', 'height=500,width=800');
+        mywindow.document.write('<html><head><title>Resumen de Corte de Caja</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+</script>
+
+<script src="/ajax/corteCaja.js"></script>

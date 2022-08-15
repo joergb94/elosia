@@ -1,0 +1,90 @@
+    {{!-- {{>navigation}} --}}
+<div id="main-content">
+    <div class="container-fluid">
+         {{>message}} 
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Usuarios</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Usuarios</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix formAdd">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Registrar Usuario</h2>
+                        <button type="button" class="btn btn-success btnLista"><i class="fa fa-clipboard-list"></i> Lista</button>
+                    </div>
+                    <div class="body">
+                        <form id="formAddUsuario" autocomplete="off" data-action="add">
+                             <input type="hidden" id="idUser" name="idUser">
+                            <div class="row">
+                                <div class="form-group  col-md-6">
+                                    <label>Nombre Completo</label>
+                                    <input type="text" class="form-control" name="nombreUser" id="nombreUser" title="Este campo solo admite letras" required>
+                                </div>
+                                <div class="form-group  col-md-6">
+                                    <label>Usuario</label>
+                                    <input type="text" class="form-control" name="username" id="username" required> 
+                                </div>
+                                <div class="form-group col-md-12 seccionCheck" style="display: none">
+                                    <label>Cambiar Contraseña</label>
+                                    <input type="checkbox" id="checkPass">
+                                </div>
+                                <div class="form-group  col-md-6">
+                                    <label>Tipo de Usuario</label>
+                                    <select name="tipoUsuario" class="form-control" id="tipoUsuario" required>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6 showPass">
+                                    <label>Contraseña</label>
+                                    <input type="password" class="form-control" name="password" id="password" required>
+                                </div>
+                                <div class="form-group col-md-12 text-center">
+                                    <input type="submit" class="btn btn-info" value="Registrar"  id="btnRegistro">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix lista" style="display: none">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Lista de Usuario</h2>
+                        <button type="button" class="btn btn-success btnNuevo"><i class="fa fa-user-plus"></i> Añadir</button>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre Completo</th>
+                                    <th>Usuario</th>
+                                    <th class="text-center">Tipo de Usuario</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="seccionUsuario"> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu8").addClass("active");
+    });
+</script>
+<script src="/ajax/usuarioAjax.js"></script>

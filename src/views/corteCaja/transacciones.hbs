@@ -1,0 +1,133 @@
+
+<div id="main-content">
+    <div class="container-fluid">
+         {{>message}} 
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Transacciones</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Transacciones</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix d-flex justify-content-center">
+            <div class="col-sm-12">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Transacciones al corte</h2>
+                        <div>
+                            <button class="btn btn-info" id="btnVerCortes" style="display: none" data-target="#modalVerCortes" data-toggle="modal">Ver Cortes</button>
+                            <button class="btn btn-warning" id="btnNuevoCorte" style="display: none">Nuevo Corte de Caja</button>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <input type="hidden" id="idUser" value="{{user.idUser}}">
+                        <table class="table table-hover" cellspacing="0" id="tablaBuscarModal">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Total de la Transacción</th>
+                                    <th class="text-center">Fecha </th>
+                                    <th class="text-center">Ver Detalles</th>
+                                </tr>
+                            </thead>
+                            <tbody id="seccionTransaccion">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="yourdiv" style="display: none">
+    <div style="font-size: 11px;font-family: 'Times New Roman'; width: 170px; max-width: 170px;">
+        {{!-- <img src="/assets/img/logo.jpg" alt="Eloisa logo" class="max-width: inherit;width: inherit;"> --}}
+        <p style="text-align: center;align-content: center;">ELOÍSA
+            <br><span id="fechaTicket"></span></p>
+        <table style="border-top: 1px dashed black;border-collapse: collapse;">
+            <thead>
+                <tr style="border-top: 1px dashed black;border-collapse: collapse;">
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 30px;max-width: 30px;word-break: break-all;">CAN</th>
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 75px;max-width: 75px;">PRODUCTO</th>
+                    <th style="font-size: 11px;font-family: 'Times New Roman';border-top: 1px dashed black;border-collapse: collapse; width: 50px;max-width: 50px;word-break: break-all;">IMPORT</th>
+                </tr>
+            </thead>
+            <tbody  id="seccionTicket">
+            </tbody>
+        </table>
+        <table style="border-top: 1px dashed black;border-collapse: collapse;text-align: right;align-content: right;font-size: 11px;font-family: 'Times New Roman'; width:100%;">
+            <tr>
+                <th><p id="subtotalTicket"></p></th>
+            </tr>
+        </table>
+        <p style="text-align: center;align-content: center;">¡GRACIAS POR SU COMPRA!
+    </div>
+</div>
+
+
+<!-- MODAL VER DETALLE TRANSACCION -->
+<div class="modal fade " id="modalDetalleTransaccionesCorte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detalles de la Transacción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+            <div style="max-height:60vh; overflow: scroll;">
+                <table class="table table-hover" cellspacing="0" id="tablaBuscarModal">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th style="width: 40px">Cantidad</th>
+                            <th>Total</th>
+                            <th>Fecha </th>
+                        </tr>
+                    </thead>
+                    <tbody id="seccionDetalleTransaccion">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-info" value="Ticket" onclick="PrintElem('#yourdiv')">
+            <button class="btn btn-danger" onclick="" id="btnCancelarTransaccion">Cancelar Transacción</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#menu2").addClass("active");
+    });
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+
+    function Popup(data)
+    {
+        var mywindow = window.open('', 'new div', 'height=500,width=800');
+        mywindow.document.write('<html><head><title>Ticket de compra</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
+</script>
+<script src="/ajax/transacciones.js"></script>

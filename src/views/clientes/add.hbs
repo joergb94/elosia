@@ -1,0 +1,49 @@
+<div id="main-content">
+    <div class="container-fluid">
+         {{>message}} 
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Clientes</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Clientes</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix d-flex justify-content-center">
+            <div class="col-sm-10">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Registrar Cliente</h2>
+                        <a href="/clientes/list" class="btn btn-success"><i class="fa fa-clipboard-list"></i> Lista</a>
+                    </div>
+                    <div class="body">
+                        <form action="/clientes/add" method="POST" autocomplete="off">
+                            <div class="row">
+                                <div class="form-group  col-md-6">
+                                    <label>Nombre Completo</label>
+                                    <input type="text" class="form-control" name="nombreCliente" id="nombreCliente" title="Este campo solo admite letras" required>
+                                </div>
+                                <div class="form-group  col-md-6">
+                                    <label>Teléfono</label>
+                                    <input type="text" class="form-control" name="telefonoCliente" id="telefonoCliente"> 
+                                </div>
+                                <div class="form-group col-md-12 text-center">
+                                    <input type="submit" class="btn btn-info" value="Registrar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+     $(document).ready(function(){
+        $("#menu6").addClass("active");
+    });
+</script>

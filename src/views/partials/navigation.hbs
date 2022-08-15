@@ -1,0 +1,30 @@
+{{#if user }}
+                   
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+            </div>
+
+            <div class="navbar-brand">
+                 <span href="#" class="mb-0 h5">Eloísa</span>
+            </div>
+            <div class="navbar-right text-right">
+                <a href="/logout" class="btn btn-light"> <i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="left-sidebar" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    {{#each menus}}
+                        {{#checkMenu id_menu link icono descripcionMenu}}
+                        {{/checkMenu}}
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+{{/if}}

@@ -1,0 +1,114 @@
+
+ <script src="/assets/js/JsBarcode.all.min.js"></script>
+<div id="main-content">
+    <div class="container-fluid">
+         
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Productos</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+           {{>message}} 
+        <!-- CONTENIDO -->
+        <div class="row clearfix">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Códigos de Barra</h2>
+                    </div>
+                    <div class="body table-responsive" >
+                        <button onclick="generate()" class="btn btn-danger my-2"><i class="fas fa-file-pdf"></i> Generar PDF</button>
+                        <table class="table" id="table" style="display:none">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Código</th>
+                                </tr>
+                            </thead>
+                            <tbody id="seccionProductos">
+                                
+                                {{#each productos}}
+                                    <canvas id="barcode{{idProd}}" width="2" height="25" style="display:none"></canvas>
+                                    <tr>
+                                        <td> {{nombreProd}} </td>
+                                        <td> <img src="" id="result{{codigoProd}}" ></td>
+                                    </tr>
+                                {{/each}}
+                                {{#each productos}}
+                                    <script>
+                                        JsBarcode("#barcode"+ {{idProd}}, '{{codigoProd}}', {
+                                            format: "codabar",
+                                            lineColor: "#000",
+                                            width: 2,
+                                            height: 25,
+                                            displayValue: true
+                                        });
+                                        var canvas = document.getElementById("barcode"+ {{idProd}});
+                                        var dataURL = canvas.toDataURL();
+                                        $("#result"+ {{codigoProd}}).attr('src', dataURL);
+                                        
+                                    </script>
+                                {{/each}}
+                            </tbody>                           
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     $(document).ready(function(){
+        $("#menu9").addClass("active");
+    });
+</script>
+<script>
+   function generate() {
+        var doc = new jsPDF('p', 'pt');
+
+        var elem = document.getElementById('table');
+        var imgElements = document.querySelectorAll('#table tbody img');
+        var data = doc.autoTableHtmlToJson(elem);
+        console.log(data.rows.length);
+        
+        var images = [];
+        var i = 0;
+        doc.autoTable(data.columns, data.rows, {
+           
+            createdCell :  function ( cell , opts ) {
+                cell.styles.cellPadding = 30;
+            },
+            bodyStyles: {rowHeight: 50},
+            
+            drawCell: function(cell, opts) {
+                if (opts.column.dataKey === 1) {
+                    
+                    images.push({
+                    url: imgElements[i].src,
+                    x: cell.textPos.x,
+                    y: cell.textPos.y
+                    });
+                    i++;
+                }
+            },
+            addPageContent: function() {
+                
+                for (var i = 0; i < images.length; i++) {
+                    doc.addImage(images[i].url, images[i].x - 50, images[i].y - 28, 150, 60);
+                }
+                images = [];
+            }
+        });
+
+        doc.save("codigosProductos.pdf");
+    }
+
+</script>
+

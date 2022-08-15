@@ -1,0 +1,47 @@
+    {{!-- {{>navigation}} --}}
+<div id="main-content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Productos</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+        <!-- CONTENIDO -->
+        <div class="row clearfix  d-flex justify-content-center">
+            <div class="col-sm-6 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Modificar Categoría</h2>
+                        <a href="/productos/listCat" class="btn btn-success"><i class="fa fa-clipboard-list"></i> Lista</a>
+                    </div>
+                    <div class="body">
+                        <form action="/productos/updateCat/{{categoria.idCategoria}}" method="POST">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <label>Nombre de Categoría</label>
+                                    <input type="text" class="form-control" name="nombreCategoria" id="nombreCategoria" title="Este campo solo admite letras" required value="{{categoria.nombreCategoria}}">
+                                </div>
+                                <div class="form-group col-md-12 text-center">
+                                    <input type="submit" class="btn btn-info" value="Actualizar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+     $(document).ready(function(){
+        $("#menu5").addClass("active");
+    });
+</script>
+<script src="/assets/js/app.js"></script>

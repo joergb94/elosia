@@ -1,0 +1,71 @@
+<div id="main-content" >
+  <div class="container-fluid" >
+         
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <h2><a href="/pv/add" class="btn btn-xs btn-link btn-toggle-fullwidth"></a> Productos</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/pv/add"><i class="icon-home"></i></a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ul>
+                </div>            
+            </div>
+        </div>
+           {{>message}} 
+        <!-- CONTENIDO -->
+        <div class="row clearfix">
+            <div class="col-sm-12 ">
+                <div class="card" id="documenter_cover">
+                    <div class="header d-flex justify-content-between">
+                        <h2>Lista de Productos</h2>
+                        <div>
+                            <a href="/productos/listCat" class="btn btn-light"><i class="fa fa-clipboard-list"></i> Categorias</a>
+                            <a href="/productos/add" class="btn btn-success"><i class="fas fa-gifts"></i> Añadir</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover" id="tablaProductos" style="display:none">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th class="text-center">Precio Compra</th>
+                                    <th class="text-center">Precio Público</th>
+                                    <th class="text-center">Mínimo en Almacen</th>
+                                    <th class="text-center">Categoría</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each productos}}
+                                    <tr>
+                                        <td> {{codigoProd}} </td>
+                                        <td> {{nombreProd}} </td>
+                                        <td class="text-center"> $ {{#formatoPrecio precioProd}} {{/formatoPrecio}}</td>
+                                        <td class="text-center"> $ {{#formatoPrecio precioVentaProd}} {{/formatoPrecio}}</td>
+                                        <td class="text-center"> {{minimoStock}} </td>
+                                        <td class="text-center"> {{nombreCategoria}} </td>
+                                        {{#checkStatus estatusProd idProd}} 
+                                        {{/checkStatus}}
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+        $("#menu5").addClass("active");
+        $('#tablaProductos').DataTable();
+        $('#tablaProductos').fadeIn(2000);
+
+    } );
+</script>
+
+<script src="/ajax/producto.js"></script>
