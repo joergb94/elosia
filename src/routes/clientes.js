@@ -134,8 +134,12 @@ router.post('/detalleCompra', isLoggedIn, async(req, res) =>{
 
 // GUARDAR ABONO
 router.post('/abonar', isLoggedIn, async(req, res) => {
+    console.log(req.body);
     var idCliente = req.body.idCliente;
+    let date_ob = Date.now();
     var cantidadAbono = req.body.cantidadAbono;
+    //CONSULTAR CORTE ACTUAL
+    const corte = await pool.query("SELECT * FROM corte_caja WHERE idUser = ? AND estatusCorte = 1 LIMIT 1", [req.user.idUser]);
 
     // CONSULTAR DATOS DEL CLIENTE
     const cliente = await pool.query('SELECT * FROM cliente WHERE idCliente = ?', [idCliente]);
@@ -155,7 +159,8 @@ router.post('/abonar', isLoggedIn, async(req, res) => {
         const newAbono = {
             idUser: req.user.idUser,
             idCliente,
-            cantidadAbono
+            cantidadAbono,
+            idCorte: corte[0].idCorte
         };
         await pool.query('INSERT INTO abono_cliente SET ?', [newAbono]);
         
@@ -164,7 +169,7 @@ router.post('/abonar', isLoggedIn, async(req, res) => {
             await pool.query('UPDATE cliente SET saldoTotal = ? WHERE idCliente = ?', [saldoRestante, idCliente]);
             await pool.query('UPDATE cliente SET saldoRestante = ? WHERE idCliente = ?', [saldoRestante, idCliente]);
             // ACTUALIZAR ESTATUS DE LA TRANSACCION
-            await pool.query('UPDATE transaccion SET estatusTransaccion = 1 WHERE idCliente = ?', [idCliente]);
+            await pool.query('UPDATE transaccion SET estatusTransaccion = 1, idCorte = ? WHERE idCliente = ?', [corte[0].idCorte,idCliente]);
             // ACTUALIZAR ESTATUS DE ABONOS
             await pool.query('UPDATE abono_cliente SET estatusAbono = 0 WHERE idCliente = ?', [idCliente]);
             

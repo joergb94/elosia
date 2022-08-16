@@ -179,7 +179,7 @@ router.post("/desactivarTickets", isLoggedIn, async(req, res)=>{
 router.post("/resumenCorte", isLoggedIn, async(req, res)=>{
 
     const {idCorte} = req.body;
-    
+    const corte = await pool.query("SELECT * FROM corte_caja WHERE idCorte = ? LIMIT 1", [idCorte]);
     const transaccion = await pool.query("SELECT idTransaccion, totalTransaccion, fechaOperacion, estatusTransaccion FROM transaccion WHERE idCorte = ? AND (estatusTransaccion = 1 OR estatusTransaccion = 2)", [idCorte]);
         
     const dineroVentas = await pool.query("SELECT SUM(totalTransaccion) AS dineroVentas FROM transaccion WHERE idCorte = ? AND estatusTransaccion = 1", [idCorte]);
@@ -190,12 +190,15 @@ router.post("/resumenCorte", isLoggedIn, async(req, res)=>{
     
     const totalCancelados = await pool.query("SELECT COUNT(idTransaccion) AS totalCancelados FROM transaccion WHERE idCorte = ? AND estatusTransaccion = 2 ", [idCorte]);
 
-    const corte = await pool.query("SELECT * FROM corte_caja WHERE idCorte = ? LIMIT 1", [idCorte]);
+    const totalAbono = await pool.query("SELECT SUM(cantidadAbono) AS total_abono FROM abono_cliente WHERE idCorte = ?",[idCorte]);
+   
+    
    
     const sumaPrecioProd = await pool.query("SELECT sum(p.precioProd * td.cantidad) AS ganancia FROM transaccion_detalle td INNER JOIN transaccion t ON td.idTransaccion = t.idTransaccion INNER JOIN producto p ON td.idProd = p.idProd WHERE idCorte = ? AND t.estatusTransaccion = 1", [idCorte]);
 
     let ganancias = dineroVentas[0].dineroVentas - sumaPrecioProd[0].ganancia; 
-    
+       
+
     let totalProducto;
     if(totalProductos[0].totalProductos != null){
         totalProducto = totalProductos[0].totalProductos
@@ -210,7 +213,8 @@ router.post("/resumenCorte", isLoggedIn, async(req, res)=>{
         totalProducto,
         totalCancelados,
         corte,
-        ganancias
+        ganancias,
+        totalAbono
     }
     res.json(datos);
 });

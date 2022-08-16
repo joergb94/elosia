@@ -174,12 +174,13 @@ function resumenCorte(idCorte){
         method:'POST', 
         data: {idCorte:idCorte},
         success: function(data){
-
+            console.log(data)
             $("#corteInicial").val("$"+formatNumber(data.corte[0].cantidadCorte));
             $("#ganancias").val("$"+formatNumber(data.ganancias));
-
-            $("#dineroVentas").val("$ "+formatNumber(data.dineroVentas[0].dineroVentas));
-            $("#totalVentas").val(data.totalVentas[0].totalVentas);
+            $("#abonos_total").val("$"+formatNumber( data.totalAbono[0].total_abono));
+            
+            $("#dineroVentas").val("$ "+formatNumber( data.dineroVentas[0].dineroVentas));
+            $("#totalVentas").val(data.totalVentas[0].totalVentas); 
             $("#totalProductos").val(data.totalProducto);
             $("#totalCancelados").val(data.totalCancelados[0].totalCancelados);
             
