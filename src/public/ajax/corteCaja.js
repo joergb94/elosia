@@ -178,7 +178,6 @@ function resumenCorte(idCorte){
             $("#corteInicial").val("$"+formatNumber(data.corte[0].cantidadCorte));
             $("#ganancias").val("$"+formatNumber(data.ganancias));
             $("#abonos_total").val("$"+formatNumber( data.totalAbono[0].total_abono));
-            
             $("#dineroVentas").val("$ "+formatNumber(data.dineroVentas[0].dineroVentas + data.totalAbono[0].total_abono));
             $("#totalVentas").val(data.totalVentas[0].totalVentas); 
             $("#totalProductos").val(data.totalProducto);
