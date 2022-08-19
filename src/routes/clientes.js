@@ -169,7 +169,7 @@ router.post('/abonar', isLoggedIn, async(req, res) => {
             await pool.query('UPDATE cliente SET saldoTotal = ? WHERE idCliente = ?', [saldoRestante, idCliente]);
             await pool.query('UPDATE cliente SET saldoRestante = ? WHERE idCliente = ?', [saldoRestante, idCliente]);
             // ACTUALIZAR ESTATUS DE LA TRANSACCION
-            await pool.query('UPDATE transaccion SET estatusTransaccion = 1, idCorte = ? WHERE idCliente = ?', [corte[0].idCorte,idCliente]);
+            await pool.query('UPDATE transaccion SET estatusTransaccion = 1 WHERE idCliente = ?', [idCliente]);
             // ACTUALIZAR ESTATUS DE ABONOS
             await pool.query('UPDATE abono_cliente SET estatusAbono = 0 WHERE idCliente = ?', [idCliente]);
             

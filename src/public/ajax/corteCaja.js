@@ -179,7 +179,7 @@ function resumenCorte(idCorte){
             $("#ganancias").val("$"+formatNumber(data.ganancias));
             $("#abonos_total").val("$"+formatNumber( data.totalAbono[0].total_abono));
             
-            $("#dineroVentas").val("$ "+formatNumber( data.dineroVentas[0].dineroVentas));
+            $("#dineroVentas").val("$ "+formatNumber(data.dineroVentas[0].dineroVentas + data.totalAbono[0].total_abono));
             $("#totalVentas").val(data.totalVentas[0].totalVentas); 
             $("#totalProductos").val(data.totalProducto);
             $("#totalCancelados").val(data.totalCancelados[0].totalCancelados);
