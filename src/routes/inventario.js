@@ -21,11 +21,13 @@ router.get('/', isLoggedIn, async(req, res) => {
 
 // GENERAR TABLA
 router.post('/getTabla', isLoggedIn, async(req, res) => {
+	const user = req.user;
     const productos = await pool.query("SELECT * FROM producto P INNER JOIN categoria CAT ON P.idCategoria = CAT.idCategoria ORDER BY P.idProd DESC");
     const categorias = await pool.query("SELECT C.nombreCategoria, SUM(P.cantidadProd) AS stock FROM producto P INNER JOIN categoria C ON P.idCategoria = C.idCategoria WHERE P.estatusProd = 1 GROUP BY P.idCategoria");
     data = {
         productos,
-        categorias
+        categorias,
+		user
     }
     res.json(data);
 });
@@ -35,6 +37,7 @@ router.post('/stock', isLoggedIn, async(req, res) =>{
     let nuevaCantidad = 0;
     let arrayId = [];
     let arrayNoId = [];
+	const user = req.user;
 
     const {idProd, cantidadProdAgregar, cantidadProdHidden, flagOp} = req.body;
     for(var i=0; i<idProd.length; i++){
@@ -59,7 +62,8 @@ router.post('/stock', isLoggedIn, async(req, res) =>{
     }
     data = {
         arrayId,
-        arrayNoId
+        arrayNoId,
+		user
     }
     res.json(data);
 });

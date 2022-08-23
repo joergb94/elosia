@@ -109,7 +109,8 @@ $(document).ready( function () {
                             `;
                         }
 
-                        botones = `
+                        botones = data.user.tipoUsuario == 1?
+                        `
                             <input type="hidden" value="${dato.idProd}" name="idProd[]">
                             <input type="hidden" value="${dato.cantidadProd}" name="cantidadProdHidden[]">
                         
@@ -117,6 +118,20 @@ $(document).ready( function () {
                                 <button type="button" class="btn btn-danger btnMenos${dato.idProd}" onclick=restar(${dato.idProd})>
                                     <i class="fas fa-minus"></i>
                                 </button>
+                                <button type="button" class="btn btn-success btnMas${dato.idProd}" onclick=sumar(${dato.idProd})>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <input type="text" class="form-control w-50 agregar${dato.idProd}"  name="cantidadProdAgregar[]" style="display:none">
+                                <button type="button" class="btn btn-danger btnCancel${dato.idProd}" onclick=cancel(${dato.idProd}) style="display:none">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </div>
+                        `
+                        :  `
+                            <input type="hidden" value="${dato.idProd}" name="idProd[]">
+                            <input type="hidden" value="${dato.cantidadProd}" name="cantidadProdHidden[]">
+                        
+                            <div class="input-group mb-3">
                                 <button type="button" class="btn btn-success btnMas${dato.idProd}" onclick=sumar(${dato.idProd})>
                                     <i class="fas fa-plus"></i>
                                 </button>
@@ -204,7 +219,7 @@ function generaTabla(){
                     `;
                 }
 
-                botones = `
+                botones = data.user.tipoUsuario == 1?`
                     <input type="hidden" value="${dato.idProd}" name="idProd[]">
                     <input type="hidden" value="${dato.cantidadProd}" name="cantidadProdHidden[]">
                     <input type="hidden" value="" class="flag${dato.idProd}" name="flagOp[]">
@@ -213,6 +228,21 @@ function generaTabla(){
                         <button type="button" class="btn btn-danger btnMenos${dato.idProd}" onclick=restar(${dato.idProd})>
                             <i class="fas fa-minus"></i>
                         </button>
+                        <button type="button" class="btn btn-success btnMas${dato.idProd}" onclick=sumar(${dato.idProd})>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <input type="text" class="form-control w-50 agregar${dato.idProd}"  name="cantidadProdAgregar[]" style="display:none">
+                        <button type="button" class="btn btn-danger btnCancel${dato.idProd}" onclick=cancel(${dato.idProd}) style="display:none">
+                            <i class="fas fa-ban"></i>
+                        </button>
+                    </div>
+                `
+                :`
+                    <input type="hidden" value="${dato.idProd}" name="idProd[]">
+                    <input type="hidden" value="${dato.cantidadProd}" name="cantidadProdHidden[]">
+                    <input type="hidden" value="" class="flag${dato.idProd}" name="flagOp[]">
+                  
+                    <div class="input-group mb-3">
                         <button type="button" class="btn btn-success btnMas${dato.idProd}" onclick=sumar(${dato.idProd})>
                             <i class="fas fa-plus"></i>
                         </button>
