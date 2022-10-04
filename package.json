@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/",
+    "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
   "repository": {
@@ -34,6 +34,6 @@
     "timeago.js": "^4.0.0-beta.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.20"
   }
 }
